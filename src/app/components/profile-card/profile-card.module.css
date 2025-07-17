@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+.profileCard {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    z-index: 1000;
+    border: 1px solid rgba(255, 80, 57, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
+}
+
+.profileCard.hidden {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-2rem);
+}
+
+.profileCard.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.profileCard:hover {
+    transform: translateY(-50%) translateX(8px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12), 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-color: rgba(255, 80, 57, 0.2);
+}
+
+.profileImage {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid transparent;
+    background: linear-gradient(135deg, #FF5039, #ff6b52) padding-box,
+                linear-gradient(135deg, #FF5039, #ff6b52) border-box;
+    box-shadow: 0 8px 25px rgba(255, 80, 57, 0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.image:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 35px rgba(255, 80, 57, 0.4);
+}
+
+.profileInfo {
+    text-align: center;
+}
+
+.name {
+    font-size: 1.65rem;
+    font-weight: 600;
+    font-style: italic;
+    margin: 0 0 0.5rem 0;
+    color: #2d3748;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #2d3748, #4a5568);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.firstName {
+    font-weight: 800;
+    background: linear-gradient(135deg, #FF5039, #ff6b52);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.details {
+    margin-top: 1.2rem;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #718096;
+    line-height: 1.5;
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #4a5568;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.contactItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.contactItem:hover::before {
+    left: 100%;
+}
+
+.contactItem:hover {
+    background: rgba(255, 80, 57, 0.15);
+    border: 1px solid rgba(255, 120, 100, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transform: translateY(-2px);
+    color: #2d3748;
+    box-shadow: 0 8px 32px rgba(255, 80, 57, 0.2), 
+                0 4px 16px rgba(255, 80, 57, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -1px 0 rgba(255, 80, 57, 0.2);
+}
+
+.contactIcon {
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    background: none;
+    border-radius: 0;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.contactIconFallback {
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    background: none;
+    border-radius: 0;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.contactLogo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.contactItem:hover .contactLogo {
+    opacity: 0.8;
+}
+
+.contactText {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .profileCard {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: 320px;
+        margin: 2rem auto;
+        left: auto;
+        top: auto;
+    }
+    
+    .profileCard:hover {
+        transform: none;
+    }
+    
+    .contactText {
+        white-space: normal;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 1200px) {
+    .profileCard {
+        left: 1rem;
+        width: 280px;
+        padding: 2rem;
+    }
+    
+    .image {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .name {
+        font-size: 1.4rem;
+    }
+}
