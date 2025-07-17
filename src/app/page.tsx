@@ -28,10 +28,8 @@ export default function Home() {
     }
   }, []);
 
-  // Helper function to reset for testing (can be called from browser console)
   useEffect(() => {
-    // Add to window for testing
-    (window as any).resetFirstVisit = () => {
+    (window as Window & typeof globalThis & { resetFirstVisit?: () => void }).resetFirstVisit = () => {
       localStorage.removeItem('hasVisitedBefore');
       window.location.reload();
     };

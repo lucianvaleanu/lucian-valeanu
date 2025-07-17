@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import styles from './profile-card.module.css'
 
 export default function ProfileCard() {
@@ -14,10 +15,13 @@ export default function ProfileCard() {
     return (
         <div className={isVisible ? `${styles.profileCard} ${styles.visible}` : `${styles.profileCard} ${styles.hidden}`}>
                 <div className={styles.profileImage}>
-                    <img 
+                    <Image 
                         src="/profile-picture.jpg" 
                         alt="Lucian Văleanu" 
                         className={styles.image}
+                        width={130}
+                        height={130}
+                        priority
                     />
                 </div>
 
@@ -38,10 +42,12 @@ export default function ProfileCard() {
                             </a>
                             
                             <a href="https://github.com/lucianvaleanu" className={styles.contactItem}>
-                                <img 
+                                <Image 
                                     src="/github-logo.png" 
                                     alt="GitHub" 
                                     className={styles.contactLogo}
+                                    width={20}
+                                    height={20}
                                     onError={(e) => {
                                         e.currentTarget.style.display = 'none';
                                         const fallbackIcon = e.currentTarget.nextElementSibling as HTMLElement;
@@ -55,10 +61,12 @@ export default function ProfileCard() {
                             </a>
                             
                             <a href="https://linkedin.com/in/lucian-valeanu" className={styles.contactItem}>
-                                <img 
+                                <Image 
                                     src="/linkedin-logo.png" 
                                     alt="LinkedIn" 
                                     className={styles.contactLogo}
+                                    width={20}
+                                    height={20}
                                     onError={(e) => {
                                         e.currentTarget.style.display = 'none';
                                         const fallbackIcon = e.currentTarget.nextElementSibling as HTMLElement;
