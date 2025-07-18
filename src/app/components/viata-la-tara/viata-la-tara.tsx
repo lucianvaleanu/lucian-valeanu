@@ -79,10 +79,12 @@ export default function ViataLaTara() {
 
         setDisplayedImages([])
         setPendingImages(newPendingImages)
-        setIsLoading(true)
-        
+
         if (newPendingImages.length > 0) {
+            setIsLoading(true)
             loadNextImage(newPendingImages)
+        } else {
+            setIsLoading(false)
         }
     }
 
