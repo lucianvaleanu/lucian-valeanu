@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import styles from './profile-card.module.css'
+import { Github, Linkedin } from 'lucide-react'
+import { Mail } from 'lucide-react'
 
 export default function ProfileCard() {
     const [isVisible, setIsVisible] = useState(false)
@@ -37,52 +39,16 @@ export default function ProfileCard() {
                         
                         <div className={styles.contactInfo}>
                             <a href="mailto:valeanuluciangeorge@gmail.com" className={styles.contactItem}>
-                                <span className={styles.contactIcon}>✉</span>
-                                <span className={styles.contactText}>Mail</span>
+                                <span className={styles.contactIcon}><Mail /></span>
                             </a>
                             
-                            <a href="https://github.com/lucianvaleanu" className={styles.contactItem}>
-                                <Image 
-                                    src="/github-logo.png" 
-                                    alt="GitHub" 
-                                    className={styles.contactLogo}
-                                    width={20}
-                                    height={20}
-                                    onError={(e) => {
-                                        e.currentTarget.style.display = 'none';
-                                        const fallbackIcon = e.currentTarget.nextElementSibling as HTMLElement;
-                                        if (fallbackIcon) {
-                                            fallbackIcon.style.display = 'inline';
-                                        }
-                                    }}
-                                />
-                                <span className={styles.contactIconFallback} style={{ display: 'none' }}>⚡</span>
-                                <span className={styles.contactText}>Github</span>
+                            <a href="https://github.com/lucianvaleanu" className={styles.contactItem} target="_blank" rel="noopener noreferrer">
+                                <span className={styles.contactIcon}><Github /></span>
                             </a>
                             
-                            <a href="https://linkedin.com/in/lucian-valeanu" className={styles.contactItem}>
-                                <Image 
-                                    src="/linkedin-logo.png" 
-                                    alt="LinkedIn" 
-                                    className={styles.contactLogo}
-                                    width={20}
-                                    height={20}
-                                    onError={(e) => {
-                                        e.currentTarget.style.display = 'none';
-                                        const fallbackIcon = e.currentTarget.nextElementSibling as HTMLElement;
-                                        if (fallbackIcon) {
-                                            fallbackIcon.style.display = 'inline';
-                                        }
-                                    }}
-                                />
-                                <span className={styles.contactIconFallback} style={{ display: 'none' }}>💼</span>
-                                <span className={styles.contactText}>LinkedIn Profile</span>
+                            <a href="https://linkedin.com/in/lucian-valeanu" className={styles.contactItem} target="_blank" rel="noopener noreferrer">
+                                <span className={styles.contactIcon}><Linkedin /></span>
                             </a>
-                            
-                            <div className={styles.contactItem}>
-                                <span className={styles.contactIcon}>📍</span>
-                                <span className={styles.contactText}>Available for Projects</span>
-                            </div>
                         </div>
                     </div>
                 </div>

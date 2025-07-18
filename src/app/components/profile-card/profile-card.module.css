@@ -9,17 +9,16 @@
     max-width: 500px;
     height: auto;
     max-height: none;
-    background: transparent; /* Remove background */
-    border-radius: 0; /* Remove border radius */
-    box-shadow: none; /* Remove shadow */
+    background: transparent;
+    border-radius: 0; 
+    box-shadow: none; 
     padding: 2.5rem;
     z-index: 1000;
-    border: none; /* Remove border */
-    backdrop-filter: none; /* Remove backdrop filter */
+    border: none;
+    backdrop-filter: none; 
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
-    overflow: visible; /* Change from auto to visible */
-    /* Fix text blurriness */
+    overflow: visible; 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
@@ -104,19 +103,22 @@
 
 .contactInfo {
     display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+    flex-direction: row;
+    gap: 1rem;
     margin-top: 1.5rem;
+    justify-content: center; 
 }
 
 .contactItem {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1rem;
+    justify-content: center; 
+    width: 50px; 
+    height: 50px; 
+    padding: 0;
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
+    border-radius: 50%; 
     text-decoration: none;
     color: #4a5568;
     font-size: 0.85rem;
@@ -160,12 +162,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: auto;
-    height: auto;
-    background: none;
-    border-radius: 0;
-    flex-shrink: 0;
-    margin-right: 0.5rem;
+    color: inherit;
 }
 
 .contactIconFallback {
@@ -173,20 +170,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: auto;
-    height: auto;
-    background: none;
-    border-radius: 0;
-    flex-shrink: 0;
-    margin-right: 0.5rem;
+    color: inherit;
 }
 
 .contactLogo {
     width: 20px;
     height: 20px;
     object-fit: contain;
-    flex-shrink: 0;
-    margin-right: 0.5rem;
     transition: opacity 0.3s ease;
 }
 
@@ -194,17 +184,6 @@
     opacity: 0.8;
 }
 
-.contactText {
-    flex: 1;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-}
-
-/* Responsive design */
 @media (max-width: 1400px) {
     .profileCard {
         max-width: 450px;
@@ -278,7 +257,7 @@
     .profileCard {
         position: fixed;
         left: 50%;
-        top: 55%; /* Slightly lower to account for navbar */
+        top: 55%; 
         transform: translate(-50%, -50%);
         width: auto;
         max-width: 95%;
@@ -316,18 +295,13 @@
     }
     
     .contactInfo {
-        gap: 0.6rem;
-    }
-    
-    .contactItem {
-        padding: 0.7rem 0.8rem;
-        font-size: 0.8rem;
+        gap: 1rem;
         justify-content: center;
     }
     
-    .contactText {
-        white-space: normal;
-        line-height: 1.3;
-        text-align: center;
+    .contactItem {
+        width: 45px;
+        height: 45px;
+        justify-content: center;
     }
 }

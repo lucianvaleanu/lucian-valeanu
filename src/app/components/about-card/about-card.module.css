@@ -9,17 +9,16 @@
     max-width: 800px;
     height: 80vh;
     max-height: 80vh;
-    background: transparent; /* Remove background */
-    border-radius: 0; /* Remove border radius */
-    box-shadow: none; /* Remove shadow */
+    background: transparent; 
+    border-radius: 0;
+    box-shadow: none;
     padding: 3rem;
     z-index: 1000;
-    border: none; /* Remove border */
-    backdrop-filter: none; /* Remove backdrop filter */
+    border: none;
+    backdrop-filter: none; 
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
     overflow-y: auto;
-    /* Fix text blurriness */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
@@ -71,7 +70,8 @@
 }
 
 .section {
-    margin-bottom: 0.3rem; 
+    margin-bottom: 0.3rem;
+    text-align: center;
 }
 
 .sectionTitle {
@@ -82,6 +82,7 @@
     text-transform: uppercase;
     letter-spacing: 0.6px;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
 .text {
@@ -91,9 +92,9 @@
     margin: 0;
     font-weight: 400;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
-/* Link styling for CV and other links */
 .text a {
     color: #FF5039;
     text-decoration: none;
@@ -135,6 +136,7 @@
     flex-wrap: wrap;
     gap: 0.6rem;
     margin-top: 0.5rem;
+    justify-content: center;
 }
 
 .skill {
@@ -156,13 +158,11 @@
     box-shadow: 0 2px 8px rgba(255, 80, 57, 0.2);
 }
 
-/* Remove scrollbar styling since there's no background */
 .aboutCard::-webkit-scrollbar {
     width: 0px;
     background: transparent;
 }
 
-/* Responsive design */
 @media (max-width: 1400px) {
     .aboutCard {
         width: 85%;
@@ -194,7 +194,7 @@
         height: 75vh;
         max-height: 75vh;
         padding: 2rem;
-        top: 55%; /* Account for navbar */
+        top: 55%;
     }
     
     .aboutCard:hover {

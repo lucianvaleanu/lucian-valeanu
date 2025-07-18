@@ -1,0 +1,259 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.searchWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    pointer-events: auto;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.searchInput {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    color: rgb(71, 71, 71);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-sizing: border-box;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.searchWrapper:hover .searchInput {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.searchInput:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.searchButton:hover ~ .searchInput {
+    transform: translateY(0) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.searchButton {
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    color: rgb(71, 71, 71);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.searchButton:hover {
+    background: rgba(255, 80, 57, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(255, 80, 57, 0.2);
+    color: #FF5039;
+}
+
+.searchButton:focus {
+    background: rgba(255, 80, 57, 0.2);
+    border-color: rgba(255, 80, 57, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(255, 80, 57, 0.2);
+    color: #FF5039;
+    
+}
+
+.trashButton {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    color: black;
+    cursor: pointer;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.3s forwards;
+    z-index: 3333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.imageContainer {
+    position: fixed;
+    cursor: grab;
+    z-index: 5;
+    transition: transform 0.2s ease;
+    opacity: 0;
+    animation: fadeInImage 0.3s ease forwards;
+    display: inline-block;
+    pointer-events: auto;
+}
+
+.dragging {
+    z-index: 999 !important;
+    cursor: grabbing !important;
+}
+
+.fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+}
+
+.imageControls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.imageContainer:hover .imageControls {
+    opacity: 1;
+}
+
+.controlButton {
+    width: 28px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.controlButton:hover {
+    background: rgba(255, 80, 57, 0.8);
+    transform: scale(1.1);
+}
+
+@keyframes fadeInImage {
+    to {
+        opacity: 1;
+    }
+}
+
+.imageContainer:hover {
+    z-index: 8;
+}
+
+.imageContainer:hover:not(.fullscreen) {
+    transform: scale(1.05);
+}
+
+.imageContainer:active {
+    cursor: grabbing;
+    z-index: 8;
+}
+
+.imageContainer:active:not(.fullscreen) {
+    transform: scale(1.02);
+}
+
+.searchResultImage {
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.fullscreen .searchResultImage {
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .searchInput {
+        font-size: 1rem;
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .searchButton {
+        font-size: 1rem;
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .trashButton {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 3333;
+        padding: 10px;
+    }
+}

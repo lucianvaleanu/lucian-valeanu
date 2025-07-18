@@ -5,6 +5,7 @@ import TitleCard from './components/title-card/title-card';
 import ProfileCard from './components/profile-card/profile-card';
 import AboutCard from './components/about-card/about-card';
 import Navbar from './components/navbar/navbar';
+import ViataLaTara from './components/viata-la-tara/viata-la-tara';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -15,8 +16,6 @@ export default function Home() {
 
   useEffect(() => {
     const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-    
-    console.log('hasVisitedBefore:', hasVisitedBefore); // Debug log
     
     if (hasVisitedBefore === 'true') {
       console.log('Returning visitor - showing profile card immediately');
@@ -54,6 +53,7 @@ export default function Home() {
     
     setShowTitleCard(false);
     setShowProfileCard(true);
+    setIsFirstVisit(false);
   };
 
   const handleNavigate = (page: 'home' | 'about' | 'viata-la-tara') => {
@@ -62,7 +62,7 @@ export default function Home() {
 
   return (
     <div className={styles.pageContainer}>
-      <Navbar onNavigate={handleNavigate} currentPage={currentPage} />
+      {!isFirstVisit && <Navbar onNavigate={handleNavigate} currentPage={currentPage} />}
       
       {showTitleCard && isFirstVisit && (
         <TitleCard onFadeComplete={handleTitleCardFadeComplete} />
@@ -72,20 +72,7 @@ export default function Home() {
       
       {currentPage === 'about' && <AboutCard />}
       
-      {currentPage === 'viata-la-tara' && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          textAlign: 'center',
-          color: '#718096',
-          fontFamily: 'Roboto, sans-serif'
-        }}>
-          <h2>Viața la Țară</h2>
-          <p>Coming soon...</p>
-        </div>
-      )}
+      {currentPage === 'viata-la-tara' && <ViataLaTara />}
     </div>
   );
 }
