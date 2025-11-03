@@ -3,7 +3,7 @@
 .aboutCard {
     position: fixed;
     left: 50%;
-    top: 50%;
+    top: 65%;
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 800px;
@@ -27,16 +27,16 @@
 
 .aboutCard.hidden {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translate(-50%, -55%) scale(0.95);
 }
 
 .aboutCard.visible {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -55%) scale(1);
 }
 
 .aboutCard:hover {
-    transform: translate(-50%, -50%) scale(1.02);
+    transform: translate(-50%, -55%) scale(1.02);
 }
 
 .aboutHeader {
@@ -194,21 +194,21 @@
         height: 75vh;
         max-height: 75vh;
         padding: 2rem;
-        top: 55%;
+        top: 58%;
     }
     
     .aboutCard:hover {
-        transform: translate(-50%, -55%) scale(1.02);
+        transform: translate(-50%, -58%) scale(1.02);
     }
     
     .aboutCard.hidden {
         opacity: 0;
-        transform: translate(-50%, -55%) scale(0.95);
+        transform: translate(-50%, -58%) scale(0.95);
     }
     
     .aboutCard.visible {
         opacity: 1;
-        transform: translate(-50%, -55%) scale(1);
+        transform: translate(-50%, -58%) scale(1);
     }
 }
 
@@ -219,21 +219,21 @@
         height: 80vh;
         max-height: 80vh;
         padding: 1.5rem;
-        top: 55%;
+        top: 58%;
     }
     
     .aboutCard:hover {
-        transform: translate(-50%, -55%) scale(1.02);
+        transform: translate(-50%, -58%) scale(1.02);
     }
     
     .aboutCard.hidden {
         opacity: 0;
-        transform: translate(-50%, -55%) scale(0.95);
+        transform: translate(-50%, -58%) scale(0.95);
     }
     
     .aboutCard.visible {
         opacity: 1;
-        transform: translate(-50%, -55%) scale(1);
+        transform: translate(-50%, -58%) scale(1);
     }
     
     .title {
