@@ -6,6 +6,13 @@ import { Trash2, X, Maximize2, Minimize2 } from 'lucide-react'
 import Image from 'next/image'
 import styles from './viata-la-tara.module.css'
 
+const STOP_WORDS = new Set([
+    'a', 'an', 'the', 'of', 'in', 'to', 'and', 'is', 'it', 'on',
+    'at', 'by', 'or', 'as', 'be', 'if', 'no', 'do', 's', 'for',
+    'from', 'with', 'that', 'this', 'was', 'are', 'but', 'not',
+    'you', 'all', 'can', 'had', 'her', 'his', 'one', 'our', 'out',
+])
+
 interface ImageData {
     filename: string;
     tags: string[];
@@ -35,6 +42,10 @@ export default function ViataLaTara() {
     const [lastDraggedImage, setLastDraggedImage] = useState<string | null>(null)
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
     const containerRef = useRef<HTMLDivElement>(null)
+    const [animatedPlaceholder, setAnimatedPlaceholder] = useState('')
+    const [hasInteracted, setHasInteracted] = useState(false)
+    const placeholderTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
     useEffect(() => {
         fetch('/images/images.json')
@@ -42,6 +53,74 @@ export default function ViataLaTara() {
             .then((data: ImageData[]) => setImagesData(data))
             .catch(error => console.error('Error loading images:', error))
     }, [])
+
+    // Animated placeholder hint - types out after 3s of no interaction
+    useEffect(() => {
+        if (hasInteracted) return
+
+        placeholderTimerRef.current = setTimeout(() => {
+            const hintText = 'try searching for "cat"'
+            let charIndex = 0
+            typingIntervalRef.current = setInterval(() => {
+                charIndex++
+                if (charIndex <= hintText.length) {
+                    setAnimatedPlaceholder(hintText.slice(0, charIndex))
+                } else {
+                    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current)
+                }
+            }, 60)
+        }, 3000)
+
+        return () => {
+            if (placeholderTimerRef.current) clearTimeout(placeholderTimerRef.current)
+            if (typingIntervalRef.current) clearInterval(typingIntervalRef.current)
+        }
+    }, [hasInteracted])
+
+    const handleInputFocus = () => {
+        if (!hasInteracted) {
+            setHasInteracted(true)
+            setAnimatedPlaceholder('')
+            if (placeholderTimerRef.current) clearTimeout(placeholderTimerRef.current)
+            if (typingIntervalRef.current) clearInterval(typingIntervalRef.current)
+        }
+    }
+
+    const toSearchTerms = (text: string): string[] => {
+        return text.toLowerCase().trim().split(/\s+/).filter(w => w.length > 0 && !STOP_WORDS.has(w))
+    }
+
+    const matchImages = (terms: string[]): ImageData[] => {
+        return imagesData.filter(image => {
+            const meaningfulTags = image.tags
+                .map(tag => tag.toLowerCase())
+                .filter(tag => !STOP_WORDS.has(tag))
+            return terms.some(term =>
+                meaningfulTags.some(tag => {
+                    if (tag === term) return true
+                    if (term.length >= 3 && tag.startsWith(term)) return true
+                    return false
+                })
+            )
+        })
+    }
+
+    const translateToEnglish = async (text: string): Promise<string[]> => {
+        try {
+            const res = await fetch(
+                `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=autodetect|en`
+            )
+            if (!res.ok) return []
+            const data = await res.json()
+            const translated = data.responseData?.translatedText?.toLowerCase()?.trim()
+            if (translated && translated !== text.toLowerCase().trim()) {
+                return toSearchTerms(translated)
+            }
+        } catch {
+            // Translation failed silently
+        }
+        return []
+    }
 
     const getRandomPosition = () => {
         const containerWidth = window.innerWidth
@@ -56,7 +135,7 @@ export default function ViataLaTara() {
         }
     }
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         if (!query.trim()) {
             setDisplayedImages([])
             setPendingImages([])
@@ -64,10 +143,26 @@ export default function ViataLaTara() {
             return
         }
 
-        const searchTerm = query.toLowerCase().trim()
-        const matchingImages = imagesData.filter(image => 
-            image.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-        )
+        setIsLoading(true)
+        const originalTerms = toSearchTerms(query.trim())
+
+        if (originalTerms.length === 0) {
+            setDisplayedImages([])
+            setPendingImages([])
+            setIsLoading(false)
+            return
+        }
+
+        // Try original terms first
+        let matchingImages = matchImages(originalTerms)
+
+        // If no results, try translating to English and search again
+        if (matchingImages.length === 0) {
+            const translatedTerms = await translateToEnglish(query.trim())
+            if (translatedTerms.length > 0) {
+                matchingImages = matchImages(translatedTerms)
+            }
+        }
 
         const newPendingImages: DisplayedImage[] = matchingImages.map(image => ({
             filename: image.filename,
@@ -81,7 +176,6 @@ export default function ViataLaTara() {
         setPendingImages(newPendingImages)
 
         if (newPendingImages.length > 0) {
-            setIsLoading(true)
             loadNextImage(newPendingImages)
         } else {
             setIsLoading(false)
@@ -183,6 +277,8 @@ export default function ViataLaTara() {
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     onKeyPress={handleKeyPress}
+                    onFocus={handleInputFocus}
+                    placeholder={animatedPlaceholder}
                     disabled={isLoading}
                 />
                 <Button 
