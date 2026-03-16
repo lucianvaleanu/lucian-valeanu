@@ -30,6 +30,6 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
           args: >
-            -Dsonar.projectKey=YOUR_PROJECT_KEY
-            -Dsonar.organization=YOUR_ORG
+            -Dsonar.projectKey=lucianvaleanu_lucian-valeanu
+            -Dsonar.organization=lucianvaleanu
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
