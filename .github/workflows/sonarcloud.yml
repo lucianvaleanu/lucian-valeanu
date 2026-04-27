@@ -38,3 +38,4 @@ jobs:
             -Dsonar.organization=lucianvaleanu
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.test.inclusions=src/**/*.test.jsx,src/**/*.test.tsx
