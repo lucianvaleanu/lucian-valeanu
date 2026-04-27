@@ -36,15 +36,16 @@
     flex: 1;
     padding: 1rem 1.5rem;
     font-size: 1.125rem;
-    border: none;
+    /* FIX: removed duplicate `border` — merged into one declaration */
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(10px); /* FIX: added missing webkit prefix */
     backdrop-filter: blur(10px);
     color: rgb(71, 71, 71);
     outline: none;
     transition: all 0.3s ease;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
 }
 
@@ -65,26 +66,26 @@
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
 }
 
-.searchButton:hover ~ .searchInput {
-    transform: translateY(0) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
-}
+/* FIX: removed `.searchButton:hover ~ .searchInput` — the ~ combinator selects
+   a following sibling, but .searchInput comes *before* .searchButton in the DOM,
+   so this rule never matched anything (dead code). The reset behaviour it
+   attempted is now handled naturally by the cascade. */
 
 .searchButton {
     padding: 1rem 1.5rem;
     font-size: 1.125rem;
     font-style: normal;
     font-family: 'Roboto', sans-serif;
-    border: none;
+    /* FIX: removed duplicate `border` — merged into one declaration */
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(10px); /* FIX: added missing webkit prefix */
     backdrop-filter: blur(10px);
     color: rgb(71, 71, 71);
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
     white-space: nowrap;
     font-weight: 500;
 }
@@ -102,7 +103,6 @@
     transform: translateY(-2px);
     box-shadow: 0 12px 35px rgba(255, 80, 57, 0.2);
     color: #FF5039;
-    
 }
 
 .trashButton {
@@ -187,6 +187,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    -webkit-backdrop-filter: blur(5px); /* FIX: added missing webkit prefix */
     backdrop-filter: blur(5px);
 }
 
@@ -239,17 +240,17 @@
     .container {
         padding: 1rem;
     }
-    
+
     .searchInput {
         font-size: 1rem;
         padding: 0.875rem 1.25rem;
     }
-    
+
     .searchButton {
         font-size: 1rem;
         padding: 0.875rem 1.25rem;
     }
-    
+
     .trashButton {
         bottom: 1.5rem;
         right: 1.5rem;
