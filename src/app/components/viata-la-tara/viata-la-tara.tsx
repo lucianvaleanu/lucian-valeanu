@@ -11,6 +11,7 @@ const STOP_WORDS = new Set([
     'at', 'by', 'or', 'as', 'be', 'if', 'no', 'do', 's', 'for',
     'from', 'with', 'that', 'this', 'was', 'are', 'but', 'not',
     'you', 'all', 'can', 'had', 'her', 'his', 'one', 'our', 'out',
+    'b'
 ])
 
 interface ImageData {
@@ -46,12 +47,23 @@ export default function ViataLaTara() {
     const [hasInteracted, setHasInteracted] = useState(false)
     const placeholderTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+    const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const isMountedRef = useRef(true)
 
     useEffect(() => {
         fetch('/images/images.json')
             .then(response => response.json())
             .then((data: ImageData[]) => setImagesData(data))
             .catch(error => console.error('Error loading images:', error))
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            isMountedRef.current = false
+            if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current)
+            if (placeholderTimerRef.current) clearTimeout(placeholderTimerRef.current)
+            if (typingIntervalRef.current) clearInterval(typingIntervalRef.current)
+        }
     }, [])
 
     // Animated placeholder hint - types out after 3s of no interaction
@@ -92,7 +104,8 @@ export default function ViataLaTara() {
 
     const matchImages = (terms: string[]): ImageData[] => {
         return imagesData.filter(image => {
-            const meaningfulTags = image.tags
+            const tags = Array.isArray(image.tags) ? image.tags : []
+            const meaningfulTags = tags
                 .map(tag => tag.toLowerCase())
                 .filter(tag => !STOP_WORDS.has(tag))
             return terms.some(term =>
@@ -111,8 +124,12 @@ export default function ViataLaTara() {
                 `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=autodetect|en`
             )
             if (!res.ok) return []
+
             const data = await res.json()
-            const translated = data.responseData?.translatedText?.toLowerCase()?.trim()
+            const translatedText = data?.responseData?.translatedText
+            if (typeof translatedText !== 'string') return []
+
+            const translated = translatedText.toLowerCase().trim()
             if (translated && translated !== text.toLowerCase().trim()) {
                 return toSearchTerms(translated)
             }
@@ -176,6 +193,9 @@ export default function ViataLaTara() {
         setPendingImages(newPendingImages)
 
         if (newPendingImages.length > 0) {
+            if (loadTimeoutRef.current) {
+                clearTimeout(loadTimeoutRef.current)
+            }
             loadNextImage(newPendingImages)
         } else {
             setIsLoading(false)
@@ -184,7 +204,9 @@ export default function ViataLaTara() {
 
     const loadNextImage = (remaining: DisplayedImage[]) => {
         if (remaining.length === 0) {
-            setIsLoading(false)
+            if (isMountedRef.current) {
+                setIsLoading(false)
+            }
             return
         }
 
@@ -194,9 +216,11 @@ export default function ViataLaTara() {
         setDisplayedImages(prev => [...prev, imageToLoad])
         setPendingImages(restImages)
 
-        setTimeout(() => {
+        loadTimeoutRef.current = setTimeout(() => {
+            loadTimeoutRef.current = null
+            if (!isMountedRef.current) return
             loadNextImage(restImages)
-        }, 150) 
+        }, 150)
     }
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
