@@ -33,4 +33,4 @@ jobs:
           args: >
             -Dsonar.projectKey=lucianvaleanu_lucian-valeanu
             -Dsonar.organization=lucianvaleanu
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
