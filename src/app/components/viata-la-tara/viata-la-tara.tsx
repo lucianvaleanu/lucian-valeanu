@@ -314,7 +314,7 @@ export default function ViataLaTara() {
                 </Button>
             </div>
             
-            <button className={styles.trashButton} onClick={clearImages}>
+            <button className={styles.trashButton} onClick={clearImages} aria-label="Clear images">
                 <Trash2 size={20} />
             </button>
 
